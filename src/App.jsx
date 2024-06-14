@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import confetti from 'canvas-confetti'
+import confetti from 'canvas-confetti';
 import './App.css';
- 
+
 import Footer from './components/Footer';
 
 const TURNS = {
   X: 'X',
-  O: 'O'
+  O: 'O',
 };
 
 const Square = ({ children, isSelected, updateBoard, index }) => {
@@ -42,7 +42,6 @@ function App() {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
-    
   };
 
   const updateBoard = (index) => {
@@ -56,14 +55,11 @@ function App() {
     setTurn(newTurn);
 
     const newWinner = checkWinner(newBoard);
-    setWinner(newWinner);
-    
-    
-
     if (newWinner) {
-      confetti()
-      
-      setWinner(newWinner); // Empate
+      confetti();
+      setWinner(newWinner);
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false); // Empate
     }
   };
 
@@ -75,10 +71,10 @@ function App() {
         boardToCheck[a] === boardToCheck[b] &&
         boardToCheck[a] === boardToCheck[c]
       ) {
-        return boardToCheck[a]; 
+        return boardToCheck[a]; // Retorna el ganador
       }
     }
-    return null; 
+    return null; // No hay ganador aún
   };
 
   const checkEndGame = (newBoard) => {
@@ -86,10 +82,10 @@ function App() {
   };
 
   return (
-    <main className='board'>
+    <main className="board">
       <h1>3 En Rayas</h1>
-      <button onClick={resetGame}  >Reiniciar</button>
-      <section className='game'>
+      <button onClick={resetGame}>Reiniciar</button>
+      <section className="game">
         {board.map((value, index) => (
           <Square
             key={index}
@@ -101,13 +97,13 @@ function App() {
           </Square>
         ))}
       </section>
-      <section className='turn'>
+      <section className="turn">
         <Square isSelected={turn === TURNS.O}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.X}>{TURNS.O}</Square>
       </section>
       {winner !== null && (
-        <section className='winner'>
-          <div className='text'>
+        <section className="winner">
+          <div className="text">
             <h2>{winner === false ? 'Empate' : `Ha GANADO ${winner}`}</h2>
             {winner && <Square>{winner}</Square>}
             <footer>
@@ -118,7 +114,6 @@ function App() {
       )}
       <Footer />
     </main>
-    
   );
 }
 
