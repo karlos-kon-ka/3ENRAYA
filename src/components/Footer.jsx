@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto flex justify-center">
         
         <a
-          href="https://github.com/"
+          href="https://github.com/karlos-kon-ka"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-700 hover:text-gray-900 mx-2 transition duration-300"
